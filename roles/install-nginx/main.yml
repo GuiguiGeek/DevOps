@@ -1,0 +1,7 @@
+---
+# roles/install-nginx/tasks/main.yml
+
+  - name: install
+    apt:
+      name: nginx
+      state: present

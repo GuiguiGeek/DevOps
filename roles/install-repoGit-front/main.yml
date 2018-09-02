@@ -1,0 +1,8 @@
+- name: Clone a private repository into /opt/repo.
+  git:
+    repo: https://github.com/GuiguiGeek/frontAngularCV.git
+    version: master
+    dest: /opt/repo
+    accept_hostkey: yes
+  # ssh-agent doesn't allow key to pass through remote sudo commands.
+  become: no

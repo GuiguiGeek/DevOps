@@ -1,0 +1,23 @@
+---
+# roles/install-php-fpm/tasks/main.yml
+
+  - name: php5-fpm if Debian <= 8
+    apt:
+      name: '{{ item }}'
+      state: present
+    with_items:
+      - php5-fpm
+      - php5-gd
+    when:
+      - ansible_distribution == "Debian" and ansible_distribution_major_version <= '8'
+
+  - name: php7.0-fpm if Ubuntu => 16
+    apt:
+      name: '{{ item }}'
+      state: present
+    with_items:
+      - php7.0-fpm
+      - php7.0-xml
+      - php7.0-gd
+    when:
+      - ansible_distribution == "Ubuntu" and ansible_distribution_major_version >= '16'

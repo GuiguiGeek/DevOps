@@ -1,0 +1,59 @@
+---
+# roles/configure-newserver/tasks/main.yml
+
+  - name: set hostname (volatile)
+    hostname:
+      name: '{{ inventory_hostname }}'
+
+# precedemment à vps583251
+  - name: set hostname (permanent)
+    template:
+      src: hostname.j2
+      dest: /etc/hostname
+      force: yes
+
+  - name: generate locales
+    locale_gen:
+      name: '{{ locale }}'
+      state: present
+    with_items:
+      - en_EN.UTF-8
+      - fr_FR.UTF-8
+
+  - name: set default locale
+    lineinfile:
+      dest: /etc/default/locale
+      regexp: '^LANG=.*$'
+      line: 'LANG=fr_FR.UTF-8'
+      create: yes
+      state: present
+
+  - name: set timezone
+    file:
+      src: /usr/share/zoneinfo/Europe/Paris
+      dest: /etc/localtime
+      force: yes
+      state: link
+
+  - name: common packages
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - apt-transport-https
+      - bsd-mailx
+      - ca-certificates
+      - htop
+      - manpages
+      - net-tools
+      - openssl
+      - pciutils
+      - postfix
+      - ntp
+      - ntpdate
+      - rsync
+      - tree
+      - tzdata
+      - ufw
+      - unzip
+      - vim

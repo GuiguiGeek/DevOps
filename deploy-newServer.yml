@@ -1,0 +1,11 @@
+---
+# deploy-newserver.yml
+
+- hosts: all
+  roles:
+    - configure-newserver
+
+- hosts: webservers
+  roles:
+    - install-nginx
+    - install-php-fpm
