@@ -7,5 +7,4 @@
 
 - hosts: webservers
   roles:
-    - install-nginx
-    - install-php-fpm
+    - install-repoGit-front
